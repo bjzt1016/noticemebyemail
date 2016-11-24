@@ -10,6 +10,9 @@ from .models import JobBoLe
 
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 # Create your views here.
 def inspect_jobbole(request):
@@ -46,6 +49,7 @@ def inspect_jobbole(request):
 				break
 			else:
 				all_new_titles += one_title + '##########'
+		send_mail('New Article!Check It!', all_new_titles, settings.EMAIL_HOST_USER, [settings.EMAIL_RECEIVER], fail_silently=False)
 
 		return HttpResponse('new article:%s!check it!' %all_new_titles)
 
